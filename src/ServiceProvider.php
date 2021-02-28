@@ -40,12 +40,17 @@ class ServiceProvider extends BaseServiceProvider
         });
         
         Admin::booting(function () {
+            $except = admin_base_path('auth/login');
+
+            if ($except !== '/') {
+                $except = trim($except, '/');
+            }
             
             // 匹配登陆get
-            if (Helper::matchRequestPath('get:admin/auth/login')) {
+            if (Helper::matchRequestPath('get:'.$except)) {
                 $script = '
                     var captcha_tpl = \'\
-                    <fieldset class="form-label-group form-group position-relative has-icon-left">\
+                    <fieldset class="form-label-group form-group position-relative has-icon-left login-captcha">\
                         <input id="captcha" type="text" style="width:70%;" class="form-control" name="captcha" placeholder="请输入验证码" required>\
                         <span class="captcha-img" style="width:28%;position: absolute;top: 0;right: 0;">\
                             <img id="verify" src="'.admin_route('lake-login-captcha.show').'" alt="验证码" title="点击刷新验证码" class="captcha" style="cursor: pointer;width: 100%;border-radius: .25rem;border-color: #dbe3e6;">\
@@ -67,7 +72,7 @@ class ServiceProvider extends BaseServiceProvider
             }
             
             // 匹配登陆post
-            if (Helper::matchRequestPath('post:admin/auth/login')) {
+            if (Helper::matchRequestPath('post:'.$except)) {
                 $captcha = request()->input('captcha');
                 
                 $validator = Validator::make([
