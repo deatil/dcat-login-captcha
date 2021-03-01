@@ -19,7 +19,7 @@ class Captcha
     private $uniqid = ''; 
     
     // 随机因子
-    private $charset = 'ABCDEFGHKMNPRSTUVWXYZ23456789'; 
+    private $charset = 'abcdefghkmnprstuvwxyzABCDEFGHKMNPRSTUVWXYZ23456789'; 
     
     // 验证码长度
     private $codelen = 4; 
@@ -125,7 +125,9 @@ class Captcha
         }
         
         ob_clean();
+        header('Content-Type: image/png');
         imagepng($this->img);
+        imagedestroy($this->img);
     }
     
     /**
@@ -139,6 +141,7 @@ class Captcha
         if (empty($uniqid)) {
             return false;
         }
+        
         $val = Session::pull($uniqid); // 获取并删除
         return is_string($val) && strtolower($val) === strtolower($code);
     }

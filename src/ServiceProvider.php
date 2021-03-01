@@ -49,6 +49,7 @@ class ServiceProvider extends BaseServiceProvider
             // 匹配登陆get
             if (Helper::matchRequestPath('get:'.$except)) {
                 $script = '
+                $(function() {
                     var captcha_tpl = \'\
                     <fieldset class="form-label-group form-group position-relative has-icon-left login-captcha">\
                         <input id="captcha" type="text" style="width:70%;" class="form-control" name="captcha" placeholder="'.static::trans('captcha.enter_captcha').'" required>\
@@ -67,6 +68,7 @@ class ServiceProvider extends BaseServiceProvider
                         var verifyimg = $("#verify").attr("src");
                         $("#verify").attr("src", verifyimg.replace(/\?.*$/, "") + "?" + Math.random());
                     });
+                });
                 ';
                 Admin::script($script);
             }
