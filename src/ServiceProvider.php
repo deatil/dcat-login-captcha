@@ -49,9 +49,9 @@ class ServiceProvider extends BaseServiceProvider
             // 匹配登陆get
             if (Helper::matchRequestPath('get:'.$except)) {
                 $script = '
-                $(function() {
+                ;(function() {
                     var captcha_tpl = \'\
-                    <fieldset class="form-label-group form-group position-relative has-icon-left login-captcha">\
+                    <fieldset class="form-label-group form-group position-relative has-icon-left lake-login-captcha">\
                         <input id="captcha" type="text" style="width:70%;" class="form-control" name="captcha" placeholder="'.static::trans('captcha.enter_captcha').'" required>\
                         <span class="captcha-img" style="width:28%;position: absolute;top: 0;right: 0;border-radius: .25rem;border: 1px solid #dbe3e6;">\
                             <img id="verify" src="'.admin_route('lake-login-captcha.show').'" alt="'.static::trans('captcha.captcha').'" title="'.static::trans('captcha.refresh_captcha').'" class="captcha" style="cursor: pointer;width: 100%;border-radius: .25rem;">\
@@ -65,10 +65,15 @@ class ServiceProvider extends BaseServiceProvider
                     \';
                     $(captcha_tpl).insertAfter($("#login-form fieldset.form-label-group").get(1));
                     $("#verify").click(function() {
-                        var verifyimg = $("#verify").attr("src");
-                        $("#verify").attr("src", verifyimg.replace(/\?.*$/, "") + "?" + Math.random());
+                        var verifyimg = $(this).attr("src");
+                        $(this).attr("src", verifyimg.replace(/\?.*$/, "") + "?" + Math.random());
                     });
-                });
+                    $(".lake-login-captcha .with-errors").bind("DOMNodeInserted", function() {
+                        if ($("#captcha").val() != "" && $(this).html().length > 0) {
+                            $("#verify").trigger("click");
+                        }
+                    });
+                })();
                 ';
                 Admin::script($script);
             }
