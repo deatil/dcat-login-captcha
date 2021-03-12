@@ -21,6 +21,11 @@ use Lake\LoginCaptcha\Captcha\Captcha;
 class ServiceProvider extends BaseServiceProvider
 {
     use HasFormResponse;
+
+    public function settingForm()
+    {
+        return new Setting($this);
+    }
     
     /**
      * {@inheritdoc}
@@ -28,6 +33,11 @@ class ServiceProvider extends BaseServiceProvider
     public function init()
     {
         parent::init();
+        
+        // 设置别名
+        if (! class_exists('LakeLoginCaptcha')) {
+            class_alias(__CLASS__, 'LakeLoginCaptcha');
+        }
         
         // 加载路由
         $this->app->booted(function () {

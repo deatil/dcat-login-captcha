@@ -3,6 +3,7 @@
 namespace Lake\LoginCaptcha\Http\Controllers;
 
 use Lake\LoginCaptcha\Captcha\Captcha as CaptchaImg;
+use Lake\LoginCaptcha\ServiceProvider as LakeLoginCaptcha;
 
 /**
  * 验证码
@@ -17,6 +18,17 @@ class Captcha
      */
     public function show()
     {
-        (new CaptchaImg())->makeCode()->showImage();
+        $charset = LakeLoginCaptcha::setting('charset');
+        $codelen = LakeLoginCaptcha::setting('codelen');
+        $fontsize = LakeLoginCaptcha::setting('fontsize');
+        
+        (new CaptchaImg())
+            ->withConfig([
+                'charset' => $charset ?: 'abcdefghkmnprstuvwxyzABCDEFGHKMNPRSTUVWXYZ23456789',
+                'codelen' => $codelen ?: 4,
+                'fontsize' => $fontsize ?: 20,
+            ])
+            ->makeCode()
+            ->showImage();
     }
 }
