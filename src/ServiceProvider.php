@@ -21,6 +21,14 @@ use Lake\LoginCaptcha\Captcha\Captcha;
 class ServiceProvider extends BaseServiceProvider
 {
     use HasFormResponse;
+    
+    /**
+     * 路由过滤
+     */
+    protected $exceptRoutes = [
+        'auth' => 'lake-login/captcha',
+        'permission' => 'lake-login/captcha',
+    ];
 
     public function settingForm()
     {
@@ -39,19 +47,8 @@ class ServiceProvider extends BaseServiceProvider
             class_alias(__CLASS__, 'LakeLoginCaptcha');
         }
         
-        // 加载路由
-        $this->app->booted(function () {
-            $this->registerRoutes(__DIR__.'/../routes/admin.php');
-            
-            // 路由过滤
-            $exceptRoutes = ['lake-login/captcha'];
-            Admin::context()->addMany('auth.except', $exceptRoutes);
-            Admin::context()->addMany('permission.except', $exceptRoutes);
-        });
-        
         Admin::booting(function () {
             $except = admin_base_path('auth/login');
-
             if ($except !== '/') {
                 $except = trim($except, '/');
             }
