@@ -10,4 +10,5 @@ return [
     'charset' => 'Captcha Charset',
     'codelen' => 'Captcha Codelen',
     'fontsize' => 'Captcha Fontsize',
+    'captcha_type' => 'Captcha Type',
 ];

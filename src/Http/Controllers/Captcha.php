@@ -21,12 +21,14 @@ class Captcha
         $charset = LakeLoginCaptcha::setting('charset');
         $codelen = LakeLoginCaptcha::setting('codelen');
         $fontsize = LakeLoginCaptcha::setting('fontsize');
+        $captchaType = LakeLoginCaptcha::setting('captcha_type');
         
         (new CaptchaImg())
             ->withConfig([
                 'charset' => $charset ?: 'abcdefghkmnprstuvwxyzABCDEFGHKMNPRSTUVWXYZ23456789',
                 'codelen' => $codelen ?: 4,
                 'fontsize' => $fontsize ?: 20,
+                'type' => $captchaType ?: 'string',
             ])
             ->makeCode()
             ->showImage();

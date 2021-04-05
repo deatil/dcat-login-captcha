@@ -42,6 +42,9 @@ class Captcha
     // 指定字体颜色
     private $fontcolor = ''; 
     
+    // 验证码类型 string | math
+    private $type = 'string'; 
+    
     /**
      * 设置配置
      * 
@@ -79,14 +82,33 @@ class Captcha
             $this->uniqid = 'LoginCaptcha';
         }
         
-        // 生成验证码字符串
-        $length = strlen($this->charset) - 1;
-        for ($i = 0; $i < $this->codelen; $i++) {
-            $this->code .= $this->charset[mt_rand(0, $length)];
+        if ($this->type == 'math') {
+            $x = random_int(1, 50);
+            $y = random_int(1, 50);
+            
+            $mathSymbol = random_int(1, 2);
+            if ($mathSymbol == 1) {
+                $result = $x + $y;
+                $this->code = "{$x} + {$y} = ";
+            } elseif ($mathSymbol == 2) {
+                $result = $x - $y;
+                $this->code = "{$x} - {$y} = ";
+            }
+            
+            $this->codelen = strlen($this->code);
+            
+            // 缓存验证码字符串
+            Session::put($this->uniqid, (string) $result);
+        } else {
+            // 生成验证码字符串
+            $length = strlen($this->charset) - 1;
+            for ($i = 0; $i < $this->codelen; $i++) {
+                $this->code .= $this->charset[mt_rand(0, $length)];
+            }
+            
+            // 缓存验证码字符串
+            Session::put($this->uniqid, $this->code);
         }
-        
-        // 缓存验证码字符串
-        Session::put($this->uniqid, $this->code);
         
         // 设置字体文件路径
         $this->font = __DIR__ . '/font/icon.ttf';
@@ -121,7 +143,12 @@ class Captcha
         $_x = $this->width / $this->codelen;
         for ($i = 0; $i < $this->codelen; $i++) {
             $this->fontcolor = imagecolorallocate($this->img, mt_rand(0, 156), mt_rand(0, 156), mt_rand(0, 156));
-            imagettftext($this->img, $this->fontsize, mt_rand(-30, 30), intval($_x * $i + mt_rand(1, 5)), intval($this->height / 1.4), $this->fontcolor, $this->font, $this->code[$i]);
+            
+            $x = intval($_x * $i + mt_rand(1, 5));
+            $y = intval($this->height / 1.4);
+            $angle = ($this->type == 'math') ? 0 : mt_rand(-30, 30);
+            
+            imagettftext($this->img, $this->fontsize, $angle, $x, $y, $this->fontcolor, $this->font, $this->code[$i]);
         }
         
         ob_clean();

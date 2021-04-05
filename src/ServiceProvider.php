@@ -29,11 +29,6 @@ class ServiceProvider extends BaseServiceProvider
         'auth' => 'lake-login/captcha',
         'permission' => 'lake-login/captcha',
     ];
-
-    public function settingForm()
-    {
-        return new Setting($this);
-    }
     
     /**
      * {@inheritdoc}
@@ -119,6 +114,14 @@ class ServiceProvider extends BaseServiceProvider
     {
         $response = $this->validationErrorsResponse($msg);
         throw new HttpResponseException($response);
+    }
+    
+    /**
+     * 设置
+     */
+    public function settingForm()
+    {
+        return new Setting($this);
     }
     
 }

@@ -10,4 +10,5 @@ return [
     'charset' => '随机因子',
     'codelen' => '验证码长度',
     'fontsize' => '字体大小',
+    'captcha_type' => '验证码类型',
 ];
