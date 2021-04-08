@@ -11,4 +11,6 @@ return [
     'codelen' => 'Captcha Codelen',
     'fontsize' => 'Captcha Fontsize',
     'captcha_type' => 'Captcha Type',
+    'captcha_type_string' => 'String',
+    'captcha_type_math' => 'Math',
 ];

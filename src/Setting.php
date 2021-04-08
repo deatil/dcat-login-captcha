@@ -47,8 +47,8 @@ class Setting extends Form
             ->default('20');
         $this->radio('captcha_type', ServiceProvider::trans('captcha.captcha_type'))
             ->options([
-                'string' => '字符',
-                'math' => '数学公式',
+                'string' => ServiceProvider::trans('captcha.captcha_type_string'),
+                'math' => ServiceProvider::trans('captcha.captcha_type_math'),
             ])
             ->default('string');
     }

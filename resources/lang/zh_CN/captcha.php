@@ -11,4 +11,6 @@ return [
     'codelen' => '验证码长度',
     'fontsize' => '字体大小',
     'captcha_type' => '验证码类型',
+    'captcha_type_string' => '字符',
+    'captcha_type_math' => '数学公式',
 ];
