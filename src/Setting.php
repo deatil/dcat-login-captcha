@@ -39,16 +39,16 @@ class Setting extends Form
      */
     public function form()
     {
-        $this->textarea('charset', ServiceProvider::trans('captcha.charset'))
+        $this->textarea('charset', $this->trans('captcha.charset'))
             ->default('abcdefghkmnprstuvwxyzABCDEFGHKMNPRSTUVWXYZ23456789');
-        $this->text('codelen', ServiceProvider::trans('captcha.codelen'))
+        $this->text('codelen', $this->trans('captcha.codelen'))
             ->default('4');
-        $this->text('fontsize', ServiceProvider::trans('captcha.fontsize'))
+        $this->text('fontsize', $this->trans('captcha.fontsize'))
             ->default('20');
-        $this->radio('captcha_type', ServiceProvider::trans('captcha.captcha_type'))
+        $this->radio('captcha_type', $this->trans('captcha.captcha_type'))
             ->options([
-                'string' => ServiceProvider::trans('captcha.captcha_type_string'),
-                'math' => ServiceProvider::trans('captcha.captcha_type_math'),
+                'string' => $this->trans('captcha.captcha_type_string'),
+                'math' => $this->trans('captcha.captcha_type_math'),
             ])
             ->default('string');
     }
