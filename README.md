@@ -19,7 +19,7 @@
 composer require lake/login-captcha
 ```
 
-## 安装扩展
+### 安装扩展
 
 在 `开发工具->扩展` 安装本扩展
 
