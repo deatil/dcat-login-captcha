@@ -89,10 +89,10 @@ class Captcha
             $mathSymbol = random_int(1, 2);
             if ($mathSymbol == 1) {
                 $result = $x + $y;
-                $this->code = "{$x} + {$y} = ";
+                $this->code = "{$x}+{$y}=";
             } elseif ($mathSymbol == 2) {
                 $result = $x - $y;
-                $this->code = "{$x} - {$y} = ";
+                $this->code = "{$x}-{$y}=";
             }
             
             $this->codelen = strlen($this->code);

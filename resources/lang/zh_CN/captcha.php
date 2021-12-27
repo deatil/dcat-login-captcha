@@ -13,4 +13,7 @@ return [
     'captcha_type' => '验证码类型',
     'captcha_type_string' => '字符',
     'captcha_type_math' => '数学公式',
+    
+    'charset_help' => '随机因子需验证码类型为字符有效',
+    'codelen_help' => '验证码长度需验证码类型为字符有效',
 ];

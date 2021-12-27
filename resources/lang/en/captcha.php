@@ -13,4 +13,7 @@ return [
     'captcha_type' => 'Captcha Type',
     'captcha_type_string' => 'String',
     'captcha_type_math' => 'Math',
+    
+    'charset_help' => 'Captcha Charset need String',
+    'codelen_help' => 'Captcha Codelen need String',
 ];

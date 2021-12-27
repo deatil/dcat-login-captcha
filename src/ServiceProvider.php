@@ -97,6 +97,17 @@ class ServiceProvider extends BaseServiceProvider
                     $this->returnError($validator);
                 }
                 
+                // 检查验证码长度
+                $captchaType = static::setting('captcha_type');
+                if ($captchaType == "string") {
+                    $codelen = static::setting('codelen');
+                    if (strlen($captcha) != $codelen) {
+                        $this->returnError([
+                            'captcha' => static::trans('captcha.captcha_error')
+                        ]);
+                    }
+                }
+                
                 if (! (new Captcha())->check($captcha)) {
                     $this->returnError([
                         'captcha' => static::trans('captcha.captcha_error')
