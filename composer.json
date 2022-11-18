@@ -1,7 +1,7 @@
 {
     "name": "lake/login-captcha",
-    "alias": "login captcha",
-    "description": "Dcat-admin login captcha extension.",
+    "alias": "登录验证码",
+    "description": "Dcat-admin login captcha extension. / Dcat-admin 登录验证码。",
     "type": "library",
     "keywords": [
         "dcat-admin", 
