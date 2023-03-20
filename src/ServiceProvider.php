@@ -52,6 +52,7 @@ class ServiceProvider extends BaseServiceProvider
             if (Helper::matchRequestPath('get:'.$except)) {
                 $defaultCaptcha = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAIIAAAAyCAYAAACQyQOIAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsQAAA7EAZUrDhsAAASrSURBVHhe7VuxcqMwEN2kM8zNFXAtbUxp13w+tV3GaamhuLkBd3cnOYmDVgtaBGgUI2bcBEn79u2TtFqRp3/igfBYM/D3z+/Rvs8/flqP7bLjUxCCS7r9tfXsL7SAzCUDQQgu2fbYVhCCx8FxCS0IwSXbHtsKQvA4OC6hBSG4ZNtjW0EIHgfHJbQgBJdse2wrCMHj4LiEFoTgkm2PbQUheBwcl9DCXcMqbDdwKV+h7o+d5lDsk1WsLTFoWBGWYPEBxghCeIAgznVBXqVvWAgdVOcSynMF3Vwmv3H/z+8pNiaEj+CXQgDlCar2G0dwYegbE8LC7D3QcEEIDxRMG1fkp3S3n03n0OfxGJhcR+iqM5wGNtc4O8Ihi3SWugrOpwqoLXmwz22UsfM48U70SPMCtON6c4HyVTnVD0aS7P/Rmu/7QrgxSmsezcJlC6G5lGDkMs7geMjgUwpjxKnQYsiOB9A1RBOaw+s4FoQDZgphuu807mNUDU6iGx8DRaf5PJqFwNga3jNtowjMtkZatFCdLmL+M57aIAI5RCsIv7BGMxhc0HeBe2glvYMQbebBnsAj8ty4ItBqTCEv9qAUTOWy9QbwQq4IxIwnljl9m6CX//fJ09sCyCWTWmVkYNGxEa8ePYLsfR/CrWIixyfwfLWz5dE8wcZXBEHwG84HJFAsAmknyuDQE8G76Z1Y8gsoCmLZl+3zVEHYNjWruKPt48RYYlmApp5RKprtu05+mqs8RNkLZDFq13Zw1bquw2PfzKgQurpBCZ5Q5MtXDmDSWZTtiX3/q1fXIpdJEpAVIcSMurtJxN8RqW2nU2rC/Pl+ru+aHRJ3BGmClXAFQYPyrMIjAjgqhGuH8vw4gZQ4FJjIlclWeavmqT/jnkkMHCfpPRlFdEG8Qx2uLWuFofAv5buJmynvl+QR2x0RQgd4wsIuHggC7Y7c22Tw1000p1DJbTvfd64lTjsXPDJODRyoRBtxZLOZ8ZbWHrebIx6nCYG91IrsvMIFHJnxysSx90PJ4rxoErN43oBqb7bvSxp1x+OIECJ9z20b4CXiV8DpBc6YbekaTAC7GhotpRnKJ0zW5/huGnvK+/V4nJAjACS/1OOdPJJV1RKFGgmDUjuDpLqCijgV6lm+OLzGFpntB4R1fWf4yW5iySMaf3xrII5kIKpfZUlUAWUZ9/6Rxw4idCqqK/UDkOZi+z2AXj0bKszox0xqpgthUdq29p0dQUbDNXlUzRsri+TFz5ALvaoYvz7eHwxXLIcri+MsDt1diF6Gewe1WDXBvlIRJPoNVDB1nhjVR6OEiMqvoQ8jWUxgX+SANwkTFrJq1u8kibFJFuMYcAlGxTIiAtkw2QPfrJ3vJm6mvF+Nx0lbw72xJERm+2OCECpUSswRZIcCjloNFUDeKRRaOZpJz06UpgUWMpjy9o4qZ6Ohk73wha0GG9+ZvrCarcQjss3YGlhoV2r0/f4/YCUiVh+WsTWsjiEY8ICBIAQPguADhCAEH6LgAYYgBA+C4AOEIAQfouABhiAED4LgAwTPj48+ULQNDGFF2EacjV4GIRgp2kaDIIRtxNnoZRCCkaJtNAhC2EacjV7+B1T7RDhNUhVIAAAAAElFTkSuQmCC';
                 $captchaUrl = admin_route('lake-login-captcha.show');
+                $captchaPosition = static::setting('captcha_position') ?: '#login-form fieldset.form-label-group:eq(1)';
                 $script = '
                 ;(function() {
                     var captcha_tpl = \'<fieldset class="form-label-group form-group position-relative has-icon-left lake-login-captcha">\'
@@ -65,7 +66,7 @@ class ServiceProvider extends BaseServiceProvider
                         captcha_tpl += \'<label for="captcha">'.static::trans('captcha.captcha').'</label>\'
                         captcha_tpl += \'<div class="help-block with-errors"></div>\'
                         captcha_tpl += \'</fieldset>\';
-                    $(captcha_tpl).insertAfter($("#login-form fieldset.form-label-group").get(1));
+                    $(captcha_tpl).insertAfter($("'.$captchaPosition.'").get(0));
                     $("#verify").click(function() {
                         var verifyimg = $(this).data("src");
                         $(this).attr("src", verifyimg.replace(/\?.*$/, "") + "?" + Math.random());

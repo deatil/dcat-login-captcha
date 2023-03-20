@@ -26,10 +26,11 @@ class Setting extends Form
      */
     protected function formatInput(array $input)
     {
-        $input['charset'] = $input['charset'] ?: 'abcdefghkmnprstuvwxyzABCDEFGHKMNPRSTUVWXYZ23456789';
-        $input['codelen'] = $input['codelen'] ?: 4;
-        $input['fontsize'] = $input['fontsize'] ?: 20;
         $input['captcha_type'] = $input['captcha_type'] ?: 'string';
+        $input['fontsize'] = $input['fontsize'] ?: 20;
+        $input['codelen'] = $input['codelen'] ?: 4;
+        $input['charset'] = $input['charset'] ?: 'abcdefghkmnprstuvwxyzABCDEFGHKMNPRSTUVWXYZ23456789';
+        $input['captcha_position'] = $input['captcha_position'] ?? '';
 
         return $input;
     }
@@ -53,5 +54,8 @@ class Setting extends Form
         $this->textarea('charset', $this->trans('captcha.charset'))
             ->default('abcdefghkmnprstuvwxyzABCDEFGHKMNPRSTUVWXYZ23456789')
             ->help($this->trans('captcha.charset_help'));
+        $this->text('captcha_position', $this->trans('captcha.captcha_position'))
+            ->default('')
+            ->help($this->trans('captcha.captcha_position_help'));
     }
 }
